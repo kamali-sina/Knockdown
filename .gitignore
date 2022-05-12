@@ -17,3 +17,5 @@ main
 
 #Savefiles
 *.kds
+
+.vscode/
