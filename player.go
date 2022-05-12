@@ -47,13 +47,20 @@ func doesFileExist(path string) bool {
 	}
 }
 
+func loadPlayerFromFile(savefileName string) (*Player, error) {
+	file, _ := ioutil.ReadFile(savefileName)
+	player := &Player{}
+	err := json.Unmarshal([]byte(file), player)
+	return player, err
+}
+
+// TODO: Add error handling
 func MakePlayer(name string) *Player {
 	savefileName := name + SaveFilePostFix
 	var player *Player
 	if doesFileExist(savefileName) {
 		fmt.Println("exsts!1")
-		// TODO:
-		// loadPlayerFromFile(savefileName)
+		player, _ = loadPlayerFromFile(savefileName)
 	} else {
 		player = &Player{name, BaseMaxHP, BaseMaxStamina, 0}
 		player.saveToFile(savefileName)
