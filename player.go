@@ -12,6 +12,7 @@ const (
 	BaseMaxHP       = 20
 	BaseMaxStamina  = 50
 	SaveFilePostFix = ".kds"
+	MySecret        = "abc&1*~#^2^#s0^=)^^7%b34"
 )
 
 type Player struct {
@@ -33,7 +34,9 @@ func (p *Player) getInfo() string {
 func (p *Player) saveToFile(savefileName string) error {
 	file, _ := json.MarshalIndent(*p, "", " ")
 
-	err := ioutil.WriteFile(savefileName, file, 0644)
+	encryptedFile, _ := Encrypt(string(file), MySecret)
+
+	err := ioutil.WriteFile(savefileName, []byte(encryptedFile), 0644)
 
 	return err
 }
@@ -49,8 +52,9 @@ func doesFileExist(path string) bool {
 
 func loadPlayerFromFile(savefileName string) (*Player, error) {
 	file, _ := ioutil.ReadFile(savefileName)
+	decryptedFile, _ := Decrypt(string(file), MySecret)
 	player := &Player{}
-	err := json.Unmarshal([]byte(file), player)
+	err := json.Unmarshal([]byte(decryptedFile), player)
 	return player, err
 }
 
@@ -59,7 +63,7 @@ func MakePlayer(name string) *Player {
 	savefileName := name + SaveFilePostFix
 	var player *Player
 	if doesFileExist(savefileName) {
-		fmt.Println("exsts!1")
+		fmt.Println("Reading from file...")
 		player, _ = loadPlayerFromFile(savefileName)
 	} else {
 		player = &Player{name, BaseMaxHP, BaseMaxStamina, 0}
