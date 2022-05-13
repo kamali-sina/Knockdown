@@ -8,6 +8,12 @@ import (
 	"strings"
 )
 
+const (
+	SpacesInBetween = 5
+)
+
+// TODO: ADD getch type input
+
 func ReadLine() string {
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Print("> ")

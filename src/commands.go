@@ -5,10 +5,6 @@ import (
 	"os"
 )
 
-const (
-	SpacesInBetween = 5
-)
-
 type CommandHandler func([]string, *Player)
 
 func HandleBlock(args []string, player *Player) {
