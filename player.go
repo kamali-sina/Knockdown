@@ -9,25 +9,31 @@ import (
 )
 
 const (
-	BaseMaxHP       = 20
-	BaseMaxStamina  = 50
-	SaveFilePostFix = ".kds"
-	MySecret        = "abc&1*~#^2^#s0^=)^^7%b34"
+	BaseMaxHP        = 100
+	BaseMaxStamina   = 50
+	BaseDamage       = 10
+	BaseStaminaRegen = 3
+	SaveFilePostFix  = ".kds"
+	MySecret         = "abc&1*~#^2^#s0^=)^^7%b34"
 )
 
 type Player struct {
-	Name    string
-	Hp      float64
-	Stamina float64
-	Xp      int
+	Name         string
+	Hp           float64
+	Stamina      float64
+	StaminaRegen float64
+	Damage       float64
+	Xp           int
 }
 
 func (p *Player) getInfo() string {
 	info := ""
 	info += p.Name + "\n"
-	info += "\thp:      " + strconv.FormatFloat(p.Hp, 'f', 1, 64)
-	info += "\n\tstamina: " + strconv.FormatFloat(p.Stamina, 'f', 1, 64)
-	info += "\n\txp:      " + strconv.Itoa(p.Xp)
+	info += "\thp:            " + strconv.FormatFloat(p.Hp, 'f', 1, 64)
+	info += "\n\tstamina:       " + strconv.FormatFloat(p.Stamina, 'f', 1, 64)
+	info += "\n\tstamina regen: " + strconv.FormatFloat(p.StaminaRegen, 'f', 1, 64)
+	info += "\n\tdamage:        " + strconv.FormatFloat(p.Damage, 'f', 1, 64)
+	info += "\n\txp:            " + strconv.Itoa(p.Xp)
 	return info
 }
 
@@ -66,7 +72,7 @@ func MakePlayer(name string) *Player {
 		fmt.Println("Reading from file...")
 		player, _ = loadPlayerFromFile(savefileName)
 	} else {
-		player = &Player{name, BaseMaxHP, BaseMaxStamina, 0}
+		player = &Player{name, BaseMaxHP, BaseMaxStamina, BaseStaminaRegen, BaseDamage, 0}
 		player.saveToFile(savefileName)
 	}
 
