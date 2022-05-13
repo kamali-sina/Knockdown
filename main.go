@@ -7,6 +7,6 @@ import (
 func main() {
 	p := MakePlayer(ReadLine())
 	fmt.Println(p.getInfo())
-	SetActiveCommandSet(DefendingMoves, DefendingMoveNames)
+	SetActiveCommandSet(MainMenuCommandset)
 	run(p)
 }
