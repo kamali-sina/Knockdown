@@ -19,3 +19,6 @@ main
 *.kds
 
 .vscode/
+
+# Mac filesystem
+.DS_Store
