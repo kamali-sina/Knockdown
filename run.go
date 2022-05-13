@@ -11,7 +11,7 @@ func run(p *Player) {
 			if err != nil {
 				continue
 			}
-			handler, ok := ActiveCommandset[commandId]
+			handler, ok := ActiveCommandset.Handlers[commandId]
 			if !ok {
 				continue
 			}
