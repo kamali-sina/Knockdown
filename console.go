@@ -6,6 +6,7 @@ import (
 	"os"
 	"sort"
 	"strings"
+	"unicode"
 )
 
 const (
@@ -20,6 +21,21 @@ func ReadLine() string {
 	name, _ := reader.ReadString('\n')
 	name = strings.Replace(name, "\n", "", -1)
 	return name
+}
+
+func ReadCharNumber() int {
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print("> ")
+	for {
+		char, _, err := reader.ReadRune()
+
+		if err != nil {
+			fmt.Println(err)
+		}
+		if unicode.IsNumber(char) {
+			return int(char - '0')
+		}
+	}
 }
 
 func getCommandRowLenght() (int, int) {
