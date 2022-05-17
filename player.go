@@ -13,6 +13,7 @@ const (
 	BaseMaxStamina   = 50
 	BaseDamage       = 10
 	BaseStaminaRegen = 3
+	BaseLvl          = 1
 	SaveFilePostFix  = ".kds"
 	MySecret         = "abc&1*~#^2^#s0^=)^^7%b34"
 )
@@ -24,6 +25,7 @@ type Player struct {
 	StaminaRegen float64
 	Damage       float64
 	Xp           int
+	Lvl          int
 }
 
 func (p *Player) getInfo() string {
@@ -34,14 +36,13 @@ func (p *Player) getInfo() string {
 	info += "\n\tstamina regen: " + strconv.FormatFloat(p.StaminaRegen, 'f', 1, 64)
 	info += "\n\tdamage:        " + strconv.FormatFloat(p.Damage, 'f', 1, 64)
 	info += "\n\txp:            " + strconv.Itoa(p.Xp)
+	info += "\n\tlvl:           " + strconv.Itoa(p.Xp)
 	return info
 }
 
 func (p *Player) saveToFile(savefileName string) error {
 	file, _ := json.MarshalIndent(*p, "", " ")
-
 	encryptedFile, _ := Encrypt(string(file), MySecret)
-
 	err := ioutil.WriteFile(savefileName, []byte(encryptedFile), 0644)
 
 	return err
@@ -72,7 +73,7 @@ func MakePlayer(name string) *Player {
 		fmt.Println("Reading from file...")
 		player, _ = loadPlayerFromFile(savefileName)
 	} else {
-		player = &Player{name, BaseMaxHP, BaseMaxStamina, BaseStaminaRegen, BaseDamage, 0}
+		player = &Player{name, BaseMaxHP, BaseMaxStamina, BaseStaminaRegen, BaseDamage, 0, BaseLvl}
 		player.saveToFile(savefileName)
 	}
 
