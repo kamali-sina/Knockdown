@@ -43,8 +43,5 @@ func MakeEnemy(enemyName string) Enemy {
 
 	enemy := v.Interface().(Enemy)
 
-	// enemy(strings.Join(camelcase.Split(enemyName)[:], " "))
-
-	// TODO: Maybe fill in fields here if necessary
 	return enemy
 }
