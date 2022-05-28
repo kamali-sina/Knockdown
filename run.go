@@ -7,7 +7,7 @@ func run(p *Player) {
 		PrintAvailableCommands()
 		var gotValidInput bool
 		for !gotValidInput {
-			commandId, err := strconv.Atoi(ReadLine())
+			commandId, err := strconv.Atoi(ReadLine(""))
 			if err != nil {
 				continue
 			}
