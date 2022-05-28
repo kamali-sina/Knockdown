@@ -15,7 +15,10 @@ const (
 
 // TODO: ADD getch type input
 
-func ReadLine() string {
+func ReadLine(message string) string {
+	if message != "" {
+		fmt.Println(message)
+	}
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Print("> ")
 	name, _ := reader.ReadString('\n')
