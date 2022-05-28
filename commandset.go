@@ -7,10 +7,28 @@ type Commandset struct {
 
 var ActiveCommandset Commandset
 
+var AttackingCommandset = Commandset{
+	map[int]string{
+		1: "Jab High",
+		2: "Jab Mid",
+		3: "Jab Low",
+		4: "Punch High",
+		5: "Punch Mid",
+		6: "Punch Low",
+		7: "Grab",
+	},
+	map[int]CommandHandler{
+		1: HandleBlock,
+		2: HandleDodge,
+	},
+}
+
 var DefendingCommandset = Commandset{
 	map[int]string{
-		1: "Block",
-		2: "Dodge",
+		1: "Block High",
+		2: "Block Mid",
+		3: "Block Low",
+		4: "Dodge",
 	},
 	map[int]CommandHandler{
 		1: HandleBlock,
