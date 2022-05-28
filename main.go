@@ -6,10 +6,7 @@ import (
 
 func main() {
 	InitEnemyRegistery()
-	fmt.Println(EnemyRegistery)
-	x := MakeEnemy("BackstreetFighter")
-	fmt.Println(x)
-	p := MakePlayer(ReadLine())
+	p := MakePlayer(ReadLine("Enter you name: "))
 	fmt.Println(p.getInfo())
 	SetActiveCommandSet(MainMenuCommandset)
 	run(p)
