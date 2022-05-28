@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"reflect"
 	"strings"
 
@@ -16,17 +17,16 @@ var EnemyRegistery = make(map[string]reflect.Type)
 
 type Enemy interface {
 	ChooseMove()
-}
 
-type BackstreetFighter struct {
-	Name   string
-	Hp     float64
-	Damage float64
-	Lvl    int
-}
+	GetName() string
+	GetHp() float64
+	GetLvl() int
+	GetDamage() float64
 
-func (bf BackstreetFighter) ChooseMove() {
-	fmt.Println("choosing move")
+	SetHp(float64)
+	SetName(string)
+	SetLvL(int)
+	SetDamage(float64)
 }
 
 func InitEnemyRegistery() {
@@ -36,12 +36,23 @@ func InitEnemyRegistery() {
 	}
 }
 
-func MakeEnemy(enemyName string) Enemy {
-	v := reflect.New(EnemyRegistery[enemyName]).Elem()
-	v.FieldByName("Name").SetString(strings.Join(camelcase.Split(enemyName)[:], " "))
-	v.FieldByName("Lvl").SetInt(10)
+func GetRandomEnemy() Enemy {
+	k := rand.Intn(len(EnemyRegistery))
+	for key := range EnemyRegistery {
+		if k == 0 {
+			return MakeEnemy(key)
+		}
+		k--
+	}
+	panic("unreachable")
+}
 
+func MakeEnemy(enemyName string) Enemy {
+	fmt.Println(EnemyRegistery[enemyName])
+	v := reflect.New(EnemyRegistery[enemyName]).Elem().Addr()
 	enemy := v.Interface().(Enemy)
+	enemy.SetName(strings.Join(camelcase.Split(enemyName)[:], " "))
+	enemy.SetLvL(10)
 
 	return enemy
 }
